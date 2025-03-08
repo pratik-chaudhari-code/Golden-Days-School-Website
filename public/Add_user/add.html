@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <style>
+        .container1 {
+            width: 80%;
+            max-width: 600px;
+            border: 2px solid black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 24px;
+            text-align: center;
+            flex: 1;
+        }
+
+        #logoutbtn {
+            position: absolute;
+            right: 1.5rem;
+            width: 5rem;
+            height: 2rem;
+            border-radius: 10%;
+            background-color: rgb(218, 58, 58);
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .actions {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .actions button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            transition: background-color 0.3s;
+        }
+
+        .actions button:hover {
+            background-color: #0056b3;
+        }
+
+
+        .addContainer {
+    width: 100%;
+    padding: 20px;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.input-field {
+    width: calc(90% - 2rem); /* Account for the margin-left */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    position: relative;
+}
+
+.show-password-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    right: 0.1rem;
+    top: 35%;
+    transform: translateY(-50%);
+}
+
+.show-password-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.login-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-button:hover {
+    background-color: #0056b3;
+}
+.addContainer,.updatedataContainer,.deletedataContainer{
+    display:none;
+}
+
+.updateContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    text-align: center;
+    margin-top:3rem;
+}
+
+
+    </style>
+</head>
+<body>
+    <center>
+    <div class="container1">
+        <div class="header">
+            <h1>Admin Panel</h1>
+            <button id="logoutbtn" onclick="window.location.href='/'">Log out</button>
+        </div>
+        <div class="actions">
+            <button onclick="addBtn();">Add</button>
+            <button onclick="updatebtn();">Update</button>
+            <button onclick="deletebtn();">Delete</button>
+        </div>
+
+        <div class="updateContainer">
+
+        </div>
+
+
+        <div class="addContainer">
+            <form id="updateForm" onsubmit="return submitForm(event, '/add')">
+                <div class="input-container">
+                    <input type="email" class="input-field" placeholder="Email" name="user" id="userdata" required style="margin-left:2rem;">
+                    <div style="position: relative; width: 80%;"> 
+                        <input type="password" class="input-field" placeholder="Password" name="pass" id="passdata" required style="width: 100%;">
+                        <label for="#">Role:</label>
+                        <select name="role" id="role">
+                            <option value="Teacher">Teacher</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+
+                        <button type="button" class="show-password-button" onclick="togglePasswordVisibility()">
+                            <img class="show-password-icon" src="https://img.icons8.com/ios-glyphs/30/000000/visible.png"/>
+                        </button>
+                    </div>
+                </div>
+                <br><button type="submit" class="login-button">Submit</button>
+            </div>
+            </form>
+        </div>
+
+
+        <div class="updatedataContainer">
+            <form id="updateForm" onsubmit="return submitForm(event, '/updatedata')">
+                <div class="input-container">
+                    <input type="email" class="input-field" placeholder="Email" name="user" id="userdata" required style="margin-left:2rem;">
+                    <div style="position: relative; width: 80%;"> 
+                        <input type="password" class="input-field" placeholder="Password" name="pass" id="passdata" required style="width: 100%;">
+                        <label for="#">Role:</label>
+                        <select name="role" id="role">
+                            <option value="Teacher">Teacher</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+
+                        <button type="button" class="show-password-button" onclick="togglePasswordVisibility()">
+                            <img class="show-password-icon" src="https://img.icons8.com/ios-glyphs/30/000000/visible.png"/>
+                        </button>
+                    </div>
+                </div>
+                <br><button type="submit" class="login-button">Submit</button>
+            </div>
+            </form>
+        </div>
+
+
+        <div class="deletedataContainer">
+            <form id="deleteForm" onsubmit="return submitForm(event, '/deletedata')">
+                <div class="input-container">
+                    <input type="email" class="input-field" placeholder="Email" name="user" id="userdata" required style="margin-left:2rem;">
+                    <div style="position: relative; width: 80%;"> 
+                
+                        <label for="#">Role:</label>
+                        <select name="role" id="role">
+                            <option value="Teacher">Teacher</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+
+                    </div>
+                </div>
+                <br><button type="submit" class="login-button">Delete</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</center>
+
+<script>
+    function addBtn(){
+        const a=document.querySelector('.addContainer');
+        const b=document.querySelector('.updateContainer');
+        b.innerHTML=a.innerHTML;
+        b.style.display=(b.style.display==='none') ? 'block' :'none';
+    }
+
+    function updatebtn(){
+        const a=document.querySelector('.updatedataContainer');
+        const b=document.querySelector('.updateContainer');
+        b.innerHTML=a.innerHTML;
+        b.style.display=(b.style.display==='none') ? 'block' :'none';
+    }
+
+    function deletebtn(){
+        const a=document.querySelector('.deletedataContainer');
+        const b=document.querySelector('.updateContainer');
+        b.innerHTML=a.innerHTML;
+        b.style.display=(b.style.display==='none') ? 'block' :'none';
+    }
+
+    function togglePasswordVisibility() {
+    var passwordInput = document.getElementById('passdata');
+    var icon = document.querySelector('.show-password-icon');
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        icon.src = 'https://img.icons8.com/ios-glyphs/30/000000/invisible.png';
+    } else {
+        passwordInput.type = 'password';
+        icon.src = 'https://img.icons8.com/ios-glyphs/30/000000/visible.png';
+    }
+}
+
+async function submitForm(event, actionUrl) {
+            event.preventDefault();
+            const form = event.target;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+
+            // Client-side validation
+            const email = data.user.trim();
+            const password = data.pass ? data.pass.trim() : '';
+            const action = actionUrl.split('/')[1];
+
+            // Email validation
+            if (email.indexOf('@') === -1) {
+                alert('Please enter a valid email address');
+                return false;
+            }
+
+            if (action === 'add' || action === 'updatedata') {
+                // Password validation
+                if (password === '') {
+                    alert('Password is required');
+                    return false;
+                }
+                if (password.length < 8) {
+                    alert('Password must be at least 8 characters long');
+                    return false;
+                }
+                const passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[a-zA-Z\d@$!%*?&]{8,}$/;
+                if (!passwordRegex.test(password)) {
+                    alert('Password must contain at least one letter, one digit, and one special character');
+                    return false;
+                }
+            }
+
+            try {
+        const response = await fetch(actionUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+
+        if (!response.ok) {
+            // Check if the response is JSON
+            const contentType = response.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+                const errorResult = await response.json();
+                alert(errorResult.message || 'An error occurred');
+            } else {
+                const errorText = await response.text();
+                alert(errorText || 'An error occurred');
+            }
+            return;
+        }
+
+        const result = await response.json();
+        alert(result.message);
+
+        if (response.ok) {
+            form.reset();
+        }
+    } catch (error) {
+        alert('An unexpected error occurred');
+        console.error('Error:', error);
+    }
+        }
+
+
+
+</script>
+</body>
+</html>

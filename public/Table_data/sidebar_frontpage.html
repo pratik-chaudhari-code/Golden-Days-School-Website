@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        
+/* 
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        } */
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 18px; /* Adjust the font size as desired */
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+    font-family: 'Arial', sans-serif; /* Apply proper font style */
+}
+
+.sidebar a#sendNoticeBtn,
+.sidebar a#logoutbtn {
+    font-weight: bold; /* Optionally make the font bold */
+}
+
+
+        .sidebar a:hover {
+            color: #f1f1f1;
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        #main {
+            transition: margin-left 0.5s;
+            padding: 16px;
+        }
+
+        .openbtn {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #111;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+        }
+
+        .openbtn:hover {
+            background-color: #444;
+        }
+        
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #f0f0f0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .dashboard-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .dashboard-item {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            padding: 20px;
+            width: calc(33.33% - 20px);
+            transition: transform 0.3s ease;
+        }
+
+        .dashboard-item:hover {
+            transform: translateY(-5px);
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="javascript:void(0)" onclick="openDashboard()"><i class='bx bx-grid-alt'></i>&nbsp;Dashboard</a>
+        <a href="javascript:void(0)" onclick="openAdmission()"><i class='bx bx-add-to-queue'></i>&nbsp;Admission details</a>
+        
+        <a href="#" id="sendNoticeBtn" onclick="openNotice()"><i class='bx bx-bell'></i>&nbsp;Notice</a>
+        <a href="#" id="logoutbtn" onclick="window.location.href='/'"><i class='bx bx-log-out'></i>&nbsp;Log out</a>
+    </div>
+
+    <div id="main">
+        <button class="openbtn" onclick="openNav()">&#9776;</button>
+        <div id="dashboard-content">
+            <header>
+                <h1>Golden Days Universal School Teacher Dashboard</h1>
+            </header>
+        
+            <main>
+                <div class="dashboard-container">
+                    <div class="dashboard-item">
+                        <h2>Quick Links</h2>
+                        <ul>
+                            <li>Class Schedule</li>
+                            <li>Attendance</li>
+                            <li>Gradebook</li>
+                            <li>Assignments</li>
+                            <li>Resources</li>
+                        </ul>
+                    </div>
+        
+                    <div class="dashboard-item">
+                        <h2>Upcoming Events</h2>
+                        <ul>
+                            <li>Event Name - Date</li>
+                            <li>Event Name - Date</li>
+                            <li>Event Name - Date</li>
+                        </ul>
+                    </div>
+        
+                </div>
+            </main>
+        
+            <footer>
+                <p>&copy; 2024 Golden Days Universal School</p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+        }
+
+        function initializeSidebarButtons() {
+            document.querySelectorAll('.sidebar a').forEach(button => {
+                button.addEventListener('click', closeNav);
+            });
+        }
+        function openAdmission() {
+    fetch('/admission_history') 
+        .then(response => response.text())
+        .then(html => {
+            let tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
+
+            // Extract and execute script tags
+            let scripts = tempDiv.querySelectorAll('script');
+            scripts.forEach(script => {
+                let newScript = document.createElement('script');
+                newScript.innerHTML = script.innerHTML;
+                document.body.appendChild(newScript);
+            });
+
+            // Load HTML content into dashboard-content
+            document.getElementById('dashboard-content').innerHTML = tempDiv.innerHTML;
+
+            // Initialize sidebar buttons if needed
+            initializeSidebarButtons();
+        })
+        .catch(error => console.error('Error fetching dashboard content:', error));
+    openNav();
+}
+
+
+    function openNotice() {
+    fetch('/notice') 
+        .then(response => response.text())
+        .then(html => {
+            // Create a temporary div to hold the HTML content
+            let tempDiv = document.createElement('div');
+            tempDiv.innerHTML = html;
+
+            // Extract and execute script tags
+            let scripts = tempDiv.querySelectorAll('script');
+            scripts.forEach(script => {
+                let newScript = document.createElement('script');
+                newScript.innerHTML = script.innerHTML;
+                document.body.appendChild(newScript);
+            });
+
+            // Load HTML content into dashboard-content
+            document.getElementById('dashboard-content').innerHTML = tempDiv.innerHTML;
+
+            // Initialize sidebar buttons if needed
+            initializeSidebarButtons();
+        })
+        .catch(error => console.error('Error fetching dashboard content:', error));
+    openNav();
+}
+
+
+
+    async function openDashboard() {
+    try {
+        const response = await fetch('/dashboard'); 
+        const html = await response.text();
+        document.getElementById('dashboard-content').innerHTML = html;
+        
+        document.getElementById('dashboard-content').scrollIntoView({ behavior: 'smooth' });
+    } catch (error) {
+        console.error('Error fetching dashboard content:', error);
+    }
+    openNav();
+}
+
+    </script>
+</body>
+
+</html>
+

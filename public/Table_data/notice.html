@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Notice to Parent</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: rgba(0, 0, 0, 0.1);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .form-container {
+            background-color: #fefefe;
+            padding: 20px;
+            border: 1px solid #888;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-header {
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+
+        .form-header h2 {
+            margin: 0;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-group input[type="file"] {
+            display: none;
+        }
+
+        .form-group .file-input-label {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .form-group .file-input-label:hover {
+            background-color: #45a049;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+        }
+
+        .file-input-loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+        }
+
+        .file-size {
+            font-size: 14px;
+            color: #777;
+            margin-top: 5px;
+        }
+
+        .form-group button {
+            padding: 12px 24px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+
+        @media screen and (max-width: 768px) {
+            .form-container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="form-container">
+        <div class="form-header">
+            <h2>Send Notice</h2>
+        </div>
+        <form id="noticeForm">
+            <div class="form-group">
+                <label for="to">To:</label>
+                <input type="email" id="to" name="to" required>
+            </div>
+            <div class="form-group">
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject" name="subject" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message:</label><br>
+                <textarea id="message" name="message" rows="8" required></textarea>
+            </div>
+            <div class="form-group file-input-wrapper">
+                <label for="attachment" class="file-input-label">Choose File</label>
+                <input type="file" id="attachment" name="attachment" onchange="handleFileUpload(this)">
+                <div id="fileLoader" class="file-input-loader">Uploading...</div>
+                <div id="fileSize" class="file-size"></div>
+                <progress id="fileProgress" value="0" max="100" style="display: none;"></progress>
+            </div>
+            <div class="form-group">
+                <button type="button" onclick="submitForm()">Send</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function handleFileUpload(input) {
+            const file = input.files[0];
+            const fileSize = file.size;
+            const fileSizeKB = fileSize / 1024;
+
+            document.getElementById('fileSize').textContent = `File size: ${fileSizeKB.toFixed(2)} KB`;
+            document.getElementById('fileProgress').style.display = 'block';
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/upload', true);
+            xhr.upload.onprogress = function(e) {
+                if (e.lengthComputable) {
+                    const progress = (e.loaded / e.total) * 100;
+                    document.getElementById('fileProgress').value = progress;
+                }
+            };
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    document.getElementById('fileLoader').textContent = 'File Uploaded Successfully!';
+                } else {
+                    document.getElementById('fileLoader').textContent = 'File Upload Failed!';
+                }
+            };
+            xhr.onerror = function() {
+                document.getElementById('fileLoader').textContent = 'File Upload Failed!';
+            };
+            xhr.send(formData);
+        }
+        async function submitForm() {
+            const formData = new FormData();
+            formData.append('toSent', document.getElementById('to').value);
+            formData.append('subject', document.getElementById('subject').value);
+            formData.append('message', document.getElementById('message').value);
+            formData.append('attachment', document.getElementById('attachment').files[0]);
+
+            try {
+                const response = await fetch('/send-notice', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (response.ok) {
+                    alert('Notice sent successfully!');
+                    openNotice();
+                } else {
+                    alert('Failed to send notice.');
+                }
+            } catch (error) {
+                console.error('Error sending notice:', error);
+                alert('Error sending notice.');
+            }
+        }
+
+
+    </script>
+</body>
+
+</html>

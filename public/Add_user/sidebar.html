@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 90%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .button-group button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .button-group button:hover {
+            background-color: #45a049;
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+        }
+        
+        .search-bar input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        table th,
+        table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        thead th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        @media screen and (max-width: 600px) {
+            table {
+                border: 0;
+            }
+
+            table thead {
+                display: none;
+            }
+
+            table tr {
+                border-bottom: 2px solid #ddd;
+                display: block;
+                margin-bottom: 10px;
+            }
+
+            table td {
+                display: block;
+                text-align: right;
+                font-size: 13px;
+            }
+
+            table td:before {
+                content: attr(data-label);
+                float: left;
+                font-weight: bold;
+            }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0, 0, 0);
+            background-color: rgba(0, 0, 0, 0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 18px; /* Adjust the font size as desired */
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+    font-family: 'Arial', sans-serif; /* Apply proper font style */
+}
+
+.sidebar a#sendNoticeBtn,
+.sidebar a#logoutbtn {
+    font-weight: bold; /* Optionally make the font bold */
+}
+
+
+        .sidebar a:hover {
+            color: #f1f1f1;
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+        #main {
+            transition: margin-left 0.5s;
+            padding: 16px;
+        }
+
+        .openbtn {
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #111;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+        }
+
+        .openbtn:hover {
+            background-color: #444;
+        }
+
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    
+    <div id="mySidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="javascript:void(0)" onclick="openDashboard()"><i class='bx bx-dashboard'></i>&nbsp;Dashboard</a>
+        <a href="javascript:void(0)" onclick="openAdmissioin()"><i class='bx bx-dashboard'></i>&nbsp;Admission details</a>
+        
+        <a href="#" id="sendNoticeBtn" onclick="openNotice()"><i class='bx bx-bell'></i>&nbsp;Notice</a>
+        <a href="#" id="logoutbtn" onclick="window.location.href='/'"><i class='bx bx-log-out'></i>&nbsp;Log out</a>
+    </div>
+
+    <div id="main">
+        <button class="openbtn" onclick="openNav()">&#9776;</button>
+        </div>
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>Send Notice</h2>
+            <form id="noticeForm">
+                <label for="to">To:</label>
+                <input type="email" id="to" name="to" required><br><br>
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject" name="subject" required><br><br>
+                <label for="message">Message:</label><br>
+                <textarea id="message" name="message" rows="4" cols="50" required></textarea><br><br>
+                <label for="attachment">Attachment:</label>
+                <input type="file" id="attachment" name="attachment"><br><br>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openNav() {
+            document.getElementById("mySidebar").style.width = "250px";
+            document.getElementById("main").style.marginLeft = "250px";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidebar").style.width = "0";
+            document.getElementById("main").style.marginLeft = "0";
+        }
+
+
+    //     let currentPage = 1;
+    // const rowsPerPage = 5;
+
+    // async function fetchData() {
+    //     try {
+    //         const response = await fetch('/display');
+    //         const data = await response.json();
+    //         const tableBody = document.getElementById('table-data');
+    //         tableBody.innerHTML = '';
+
+    //         const startIndex = (currentPage - 1) * rowsPerPage;
+    //         const endIndex = startIndex + rowsPerPage;
+
+    //         data.slice(startIndex, endIndex).forEach(item => {
+    //             const row = document.createElement('tr');
+    //             row.innerHTML = `
+    //                 <td data-label="Full Name">${item.studname}</td>
+    //                 <td data-label="Parent Name">${item.parentname}</td>
+    //                 <td data-label="Email">${item.email}</td>
+    //                 <td data-label="Phone">${item.phone}</td>
+    //                 <td data-label="Grade">${item.grade}</td>
+    //                 <td data-label="Year of Passing">${item.year_of_passing}</td>
+    //                 <td data-label="Previous School">${item.pschool}</td>
+    //                 <td data-label="Referral">${item.referral}</td>`;
+    //             tableBody.appendChild(row);
+    //         });
+
+    //         updatePaginationButtons(data.length);
+    //     } catch (error) {
+    //         console.error('Error fetching data:', error);
+    //     }
+    // }
+
+    // function updatePaginationButtons(totalRows) {
+    //     const totalPages = Math.ceil(totalRows / rowsPerPage);
+    //     const prevButton = document.getElementById('prevButton');
+    //     const nextButton = document.getElementById('nextButton');
+
+    //     if (currentPage === 1) {
+    //         prevButton.disabled = true;
+    //     } else {
+    //         prevButton.disabled = false;
+    //     }
+
+    //     if (currentPage === totalPages) {
+    //         nextButton.disabled = true;
+    //     } else {
+    //         nextButton.disabled = false;
+    //     }
+    // }
+
+    // function goToPrevPage() {
+    //     if (currentPage > 1) {
+    //         currentPage--;
+    //         fetchData();
+    //     }
+    // }
+
+    // function goToNextPage() {
+    //     currentPage++;
+    //     fetchData();
+    // }
+
+    // fetchData();
+
+    //     async function exportData() {
+    //         try {
+    //             const response = await fetch('/export');
+    //             const blob = await response.blob();
+    //             const url = window.URL.createObjectURL(blob);
+    //             const a = document.createElement('a');
+    //             a.href = url;
+    //             a.download = 'student_data.xlsx';
+    //             document.body.appendChild(a);
+    //             a.click();
+    //             document.body.removeChild(a);
+    //         } catch (error) {
+    //             console.error('Error exporting data:', error);
+    //         }
+    //     }
+
+    //     function filterTable() {
+    //     var input, filter, table, tr, td, i, txtValue;
+    //     input = document.getElementById("searchInput");
+    //     filter = input.value.toUpperCase();
+    //     table = document.getElementById("table-data");
+    //     tr = table.getElementsByTagName("tr");
+    //     for (i = 0; i < tr.length; i++) {
+    //         td = tr[i].getElementsByTagName("td")[0]; 
+    //         if (td) {
+    //             txtValue = td.textContent || td.innerText;
+    //             if (txtValue.toUpperCase().indexOf(filter) > -1) {
+    //                 tr[i].style.display = "";
+    //             } else {
+    //                 tr[i].style.display = "none";
+    //             }
+    //         }
+    //     }
+    // }
+
+        function openModal() {
+            document.getElementById('myModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('myModal').style.display = 'none';
+        }
+
+        document.getElementById('noticeForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            const toSent = document.getElementById('to').value;
+            try {
+                const response = await fetch('/send-notice', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({toSent,subject, message })
+                });
+
+                if (response.ok) {
+                    alert('Notice sent successfully!');
+                    closeModal();
+                } else {
+                    alert('Failed to send notice.');
+                }
+            } catch (error) {
+                console.error('Error sending notice:', error);
+                alert('Error sending notice.');
+            }
+        });
+
+
+        document.getElementById('noticeForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+            const formData = new FormData();
+            formData.append('toSent', document.getElementById('to').value);
+            formData.append('subject', document.getElementById('subject').value);
+            formData.append('message', document.getElementById('message').value);
+            formData.append('attachment', document.getElementById('attachment').files[0]);
+
+            try {
+                const response = await fetch('/send-notice', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                if (response.ok) {
+                    alert('Notice sent successfully!');
+                    closeModal();
+                } else {
+                    alert('Failed to send notice.');
+                }
+            } catch (error) {
+                console.error('Error sending notice:', error);
+                alert('Error sending notice.');
+            }
+        });
+
+        function openDashboard() {
+        fetch('./admission_data') // Change the URL to the actual path of your dashboard HTML file
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('main').innerHTML = html;
+            })
+            .catch(error => console.error('Error fetching dashboard content:', error));
+    }
+    </script>
+</body>
+
+</html>
+

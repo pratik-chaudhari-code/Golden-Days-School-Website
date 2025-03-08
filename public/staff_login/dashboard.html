@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golden Days Universal School Teacher Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #f0f0f0;
+            padding: 20px;
+            text-align: center;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        .dashboard-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+
+        .dashboard-item {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            padding: 20px;
+            width: calc(33.33% - 20px);
+            transition: transform 0.3s ease;
+        }
+
+        .dashboard-item:hover {
+            transform: translateY(-5px);
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Golden Days Universal School Teacher Dashboard</h1>
+    </header>
+
+    <main>
+        <div class="dashboard-container">
+            <div class="dashboard-item">
+                <h2>Quick Links</h2>
+                <ul>
+                    <li>Class Schedule</li>
+                    <li>Attendance</li>
+                    <li>Gradebook</li>
+                    <li>Assignments</li>
+                    <li>Resources</li>
+                </ul>
+            </div>
+
+            <div class="dashboard-item">
+                <h2>Upcoming Events</h2>
+                <ul>
+                    <li>Event Name - Date</li>
+                    <li>Event Name - Date</li>
+                    <li>Event Name - Date</li>
+                </ul>
+            </div>
+
+            <!-- Add more dashboard items as needed -->
+
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Golden Days Universal School</p>
+    </footer>
+</body>
+</html>

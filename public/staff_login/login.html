@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login Form of Teacher staff</title>
+    <link rel="stylesheet" href="login.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+        <div class="wrapper">
+                <form id="LoginForm">
+                        <center><img src="golden days logo_prev_ui.png" alt=""></center>
+                        
+                        <h1>TEACHER LOGIN </h1>
+                        <div class="input-box">
+                                <input type="email" placeholder="USERNAME" name="username" id="usernameInput" required>
+                                <i class='bx bxs-user'></i>  
+                        </div>
+                        <div class="input-box">
+                                <input type="password" placeholder="PASSWORD" name="password" id="passwordInput" required>
+                                <span class="toggle-password">
+                                        <i class="fas fa-eye" id="togglePassword"></i>
+                                </span>
+                        </div>
+                        <button type="submit" id="login_btn">Login</button>
+                        <div class="register-link"><p><a href="/admissions">STUDENT REGISTRATION</a></p></div>
+                </form>
+        </div>
+
+
+
+    <script>
+        const passwordInput = document.getElementById('passwordInput');
+        const togglePassword = document.getElementById('togglePassword');
+
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+
+            // Change eye icon based on password visibility
+            togglePassword.classList.toggle('fa-eye-slash');
+        });
+
+
+        const LoginForm = document.getElementById('LoginForm');
+        LoginForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(LoginForm);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                const response = await fetch('/staff_login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                if (response.ok) {
+                    window.location.href = result.redirectUrl; 
+                } else {
+                    alert(result.message); 
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An unexpected error occurred');
+            }
+        });
+    </script>
+</body>
+</html>

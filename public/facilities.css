@@ -1,0 +1,105 @@
+
+.facilities-heading {
+    color: #000000;
+    font-size: 4rem;
+    text-align: center;
+    margin-top: 35px;
+}
+
+
+/* Facility Section */
+.facility {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #fff; /* White background */
+    display: flex;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.skewed p, small {
+    color: #666; /* Darker color for text */
+}
+
+.skewed h1 {
+    margin: 0;
+}
+
+.skewed {
+    width: 55em;
+    color: #333; /* Darker color for text */
+    display: flex;
+    background: #f1f1f1; /* Light gray background */
+    margin: 2em 0;
+    box-shadow: 0 0 15px rgba(0,0,0,0.7);
+}
+
+.texta {
+    padding: 1.5rem;
+    width: 50%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.skewed a {
+    color: #111; /* Dark color for links */
+    text-decoration: none;
+}
+
+.imagee {
+    width: 50%;
+    height: 17rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.imagee::before {
+    content: '';
+    position: absolute;
+    left: -6.1rem;
+    top: 50%;
+    transform: translateY(-50%) rotate(-20deg);
+    background: #f1f1f1; /* Light gray background */
+    width: 40%;
+    height: 140%;
+    box-shadow: 0 0 20px rgba(0,0,0,0.7);
+}
+
+.skewed-left .imagee::before {
+    transform: translateY(-50%) rotate(-20deg);
+    left: initial;
+    right: -6.1rem;
+}
+
+.skewed img {
+    width: 140%;
+}
+
+@media screen and (max-width:750px) {
+    .skewed {
+        display: block;
+        width: 20rem;
+    }
+    .imagee, .texta {
+        width: 100%;
+    }
+    .skewed img {
+        width: 160%;
+    }
+    .skewed .imagee::before {
+        width: 120%;
+        height: 40%;
+        top: -5rem;
+        left: 50%;
+        transform: translateX(-50%) rotate(10deg);
+    }
+    .skewed-left .imagee::before {
+        transform: translateX(-50%) rotate(-10deg);
+        top: initial;
+        bottom: -5em;
+    }
+}
